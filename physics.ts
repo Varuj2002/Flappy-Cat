@@ -62,8 +62,7 @@ const Physics = (entities, { touches, time, dispatch }): Entities => {
         const obstacleTop = entities[`ObstacleTop${index}`] as Entity;
 
         if (obstacleTop.body.bounds.max.x <= 50 && !obstacleTop.point) {
-            // obstacleTop.point = true;
-            // dispatch({ type: "new_point" });
+
             dispatch({ type: 'game_over' });
 
 
@@ -75,12 +74,8 @@ const Physics = (entities, { touches, time, dispatch }): Entities => {
     Matter.Events.on(engine, 'collisionStart', (event) => {
         const pairs = event.pairs;
         pairs.forEach(pair => {
-            if (entities.Cat.body === entities[`ObstacleTop1`].body) {
-                // 
-            }
-            if ((pair.bodyA === entities.Cat.body || pair.bodyB === entities.Cat.body) &&
-                (pair.bodyA === entities[`ObstacleTop1`].body || pair.bodyB === entities[`ObstacleTop1`].body)) {
-                dispatch({ type: 'game_over' });
+            if (entities.Cat.body.x === entities[`ObstacleTop1`].body.x || entities.Cat.body.y === entities[`ObstacleTop1`].body.y) {
+                resetObstacle(entities[`ObstacleTop1`], 2)
             }
         });
     });
