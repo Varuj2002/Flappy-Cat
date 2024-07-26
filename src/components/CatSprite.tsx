@@ -24,14 +24,14 @@ const CatSprite: React.FC = () => {
         fps: Number(fps),
         loop,
         resetAfterFinish,
-        onFinish: () => console.log('hi'),
+        onFinish: () => {}
       });
     }
   };
 
   const stop = () => {
     if (catRef.current) {
-      catRef.current.stop(() => console.log('stopped'));
+      catRef.current.stop(() => {});
     }
   };
 

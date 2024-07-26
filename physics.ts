@@ -69,7 +69,6 @@ const Physics = ({
         if (obstacleTop.body.bounds.max.x <= 50 && !obstacleTop.point) {
             // obstacleTop.point = true;
             // dispatch({ type: "new_point" });
-            // console.log('!!!!!!!!!')
         }
 
         // if (obstacleTop.body.bounds.max.x <= 0) {
