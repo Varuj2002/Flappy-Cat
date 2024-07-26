@@ -62,42 +62,38 @@ const Physics = (entities, { touches, time, dispatch }): Entities => {
         const obstacleTop = entities[`ObstacleTop${index}`] as Entity;
 
         if (obstacleTop.body.bounds.max.x <= 50 && !obstacleTop.point) {
-            console.log('AAAAAAA')
             // obstacleTop.point = true;
             // dispatch({ type: "new_point" });
+            dispatch({ type: 'game_over' });
+
+
+            resetObstacle(obstacleTop, index);
         }
-
-        if (obstacleTop.body.bounds.max.x <= 0) {
-            console.log('BBBBBBB')
-
-            // const pipeSizePos = getPipeSizePosPair(windowWidth * 0.9);
-            // Matter.Body.setPosition(
-            //     obstacleTop.body,
-            //     pipeSizePos.pipeTop.pos
-            // );
-            // Matter.Body.setPosition(
-            //     entities[`ObstacleBottom${index}`].body,
-            //     pipeSizePos.pipeBottom.pos
-            // );
-            // obstacleTop.point = false;
-        }
-
-        Matter.Body.translate(obstacleTop.body, {
-            x: -3,
-            y: 0,
-        });
-        // Matter.Body.translate(entities[`ObstacleBottom${index}`].body, {
-        //     x: -3,
-        //     y: 0
-        // });
+        Matter.Body.translate(obstacleTop.body, { x: -3, y: 0 });
     }
 
-    Matter.Events.on(engine, 'collisionStart', () => {
-        console.log('CCCCCCCCCC')
-        dispatch({ type: 'game_over' });
+    Matter.Events.on(engine, 'collisionStart', (event) => {
+        const pairs = event.pairs;
+        pairs.forEach(pair => {
+            if (entities.Cat.body === entities[`ObstacleTop1`].body) {
+                // 
+            }
+            if ((pair.bodyA === entities.Cat.body || pair.bodyB === entities.Cat.body) &&
+                (pair.bodyA === entities[`ObstacleTop1`].body || pair.bodyB === entities[`ObstacleTop1`].body)) {
+                dispatch({ type: 'game_over' });
+            }
+        });
     });
 
     return entities;
+};
+
+const resetObstacle = (obstacleTop: Entity, index: number) => {
+    const pipeSizePos = getPipeSizePosPair(windowWidth * 0.9);
+
+    Matter.Body.setPosition(obstacleTop.body, pipeSizePos.pipeTop.pos);
+
+    obstacleTop.point = false;
 };
 
 export default Physics;

@@ -6,11 +6,11 @@ import BackgroundAnimation from "./src/components/BackgroundAnimation/index";
 import entities from "./src/entities/index";
 
 export default function App() {
-  const [running, setRunning] = useState(false);
+  const [running, setRunning] = useState('START GAME');
   const [gameEngine, setGameEngine] = useState(null);
   const [currentPoints, setCurrentPoints] = useState(0);
   useEffect(() => {
-    setRunning(false);
+    setRunning('START GAME');
   }, []);
   return (
     <View style={{ flex: 1 }}>
@@ -21,10 +21,12 @@ export default function App() {
         }}
         systems={[Physics]}
         entities={entities()}
-        running={running}
+        running={!running}
         onEvent={(e) => {
           switch (e.type) {
             case "game_over":
+              console.log('game_over')
+              setRunning('GAME OVER')
               break;
             case "new_point":
               setCurrentPoints(currentPoints + 1);
@@ -47,7 +49,7 @@ export default function App() {
       >
         {currentPoints}
       </Text>
-      {!running ? (
+      {!!running ? (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
@@ -59,12 +61,12 @@ export default function App() {
             }}
             onPress={() => {
               setCurrentPoints(0);
-              setRunning(true);
+              setRunning('');
               gameEngine?.swap(entities());
             }}
           >
             <Text style={{ fontWeight: "bold", color: "white", fontSize: 30 }}>
-              START GAME
+              {running}
             </Text>
           </TouchableOpacity>
         </View>

@@ -25,7 +25,7 @@ const Obstacle: React.FC<ObstacleProps> = props => {
           top: yBody,
           left: xBody,
           width: 50,
-          height: 50,
+          height: 50
         },
       ]}
     />
