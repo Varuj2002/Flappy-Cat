@@ -3,12 +3,12 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import CatSprite from './CatSprite';
 
-interface BirdProps {
+interface CatProps {
   body: Matter.Body;
   color: string;
 }
 
-const Bird: React.FC<BirdProps> = props => {
+const Cat: React.FC<CatProps> = props => {
   const widthBody = props.body.bounds.max.x - props.body.bounds.min.x;
   const heightBody = props.body.bounds.max.y - props.body.bounds.min.y;
 
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
 });
 
-interface BirdObject {
+interface CatObject {
   body: Matter.Body;
   color: string;
   pos: Matter.Vector;
@@ -47,20 +47,20 @@ export default (
   color: string,
   pos: Matter.Vector,
   size: {width: number; height: number},
-): BirdObject => {
-  const initialBird = Matter.Bodies.rectangle(
+): CatObject => {
+  const initialCat = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
     size.width,
     size.height,
-    {label: 'Bird'},
+    {label: 'Cat'},
   );
-  Matter.World.add(world, initialBird);
+  Matter.World.add(world, initialCat);
 
   return {
-    body: initialBird,
+    body: initialCat,
     color,
     pos,
-    renderer: <Bird body={initialBird} color={color} />,
+    renderer: <Cat body={initialCat} color={color} />,
   };
 };

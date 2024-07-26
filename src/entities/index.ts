@@ -1,7 +1,7 @@
 import Matter from 'matter-js';
 import Floor from '../components/Floor';
 import Obstacle from '../components/Obstacle';
-import Bird from '../components/Bird';
+import Cat from '../components/Cat';
 import { getPipeSizePosPair } from '../utils/index';
 import { Dimensions } from 'react-native';
 
@@ -13,13 +13,13 @@ interface GameEntities {
         engine: Matter.Engine;
         world: Matter.World;
     };
-    Bird: ReturnType<typeof Bird>;
+    Cat: ReturnType<typeof Cat>;
     ObstacleTop1: ReturnType<typeof Obstacle>;
     ObstacleTop2: ReturnType<typeof Obstacle>;
     Floor: ReturnType<typeof Floor>;
 }
 
-export default (restart: () => void): GameEntities => {
+export default (): GameEntities => {
     let engine = Matter.Engine.create({ enableSleeping: false });
     let world = engine.world;
 
@@ -31,7 +31,7 @@ export default (restart: () => void): GameEntities => {
     return {
         physics: { engine, world },
 
-        Bird: Bird(world, 'green', { x: 50, y: 300 }, { height: 40, width: 40 }),
+        Cat: Cat(world, 'green', { x: 50, y: 300 }, { height: 40, width: 40 }),
 
         ObstacleTop1: Obstacle(
             world,

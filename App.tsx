@@ -25,10 +25,6 @@ export default function App() {
         onEvent={(e) => {
           switch (e.type) {
             case "game_over":
-              // setCurrentPoints(currentPoints + 1);
-
-              // setRunning(false);
-              // gameEngine.stop();
               break;
             case "new_point":
               setCurrentPoints(currentPoints + 1);
