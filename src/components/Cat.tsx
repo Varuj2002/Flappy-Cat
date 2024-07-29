@@ -32,6 +32,7 @@ const Cat: React.FC<CatProps> = props => {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
+    zIndex: 9999,
   },
 });
 

@@ -23,7 +23,15 @@ export default (): GameEntities => {
     let engine = Matter.Engine.create({ enableSleeping: false });
     let world = engine.world;
 
+
+    let worldObstacle = engine.world;
+
+
+    worldObstacle.gravity.y = 0.1;
     world.gravity.y = 0.4;
+    world.gravity.x = 0.01;
+    worldObstacle.gravity.x = 0.01;
+
 
     const pipeSizePosA = getPipeSizePosPair();
     const pipeSizePosB = getPipeSizePosPair(windowWidth * 0.9);
@@ -34,7 +42,7 @@ export default (): GameEntities => {
         Cat: Cat(world, 'green', { x: 50, y: 300 }, { height: 40, width: 40 }),
 
         ObstacleTop1: Obstacle(
-            world,
+            worldObstacle,
             'ObstacleTop1',
             'red',
             pipeSizePosA.pipeTop.pos,
@@ -50,7 +58,7 @@ export default (): GameEntities => {
         // ),
 
         ObstacleTop2: Obstacle(
-            world,
+            worldObstacle,
             'ObstacleTop2',
             'red',
             pipeSizePosB.pipeTop.pos,

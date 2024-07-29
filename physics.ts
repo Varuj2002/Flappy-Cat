@@ -1,4 +1,5 @@
 import Matter from 'matter-js';
+import React from 'react';
 import { Dimensions } from 'react-native';
 import { getPipeSizePosPair } from './src/utils/index';
 
@@ -60,22 +61,33 @@ const Physics = (entities, { touches, time, dispatch }): Entities => {
 
     for (let index = 1; index <= 2; index++) {
         const obstacleTop = entities[`ObstacleTop${index}`] as Entity;
-
         if (obstacleTop.body.bounds.max.x <= 50 && !obstacleTop.point) {
 
             dispatch({ type: 'game_over' });
 
 
-            resetObstacle(obstacleTop, index);
+            resetObstacle(obstacleTop, dispatch, index);
         }
         Matter.Body.translate(obstacleTop.body, { x: -3, y: 0 });
     }
 
     Matter.Events.on(engine, 'collisionStart', (event) => {
         const pairs = event.pairs;
+
         pairs.forEach(pair => {
-            if (entities.Cat.body.x === entities[`ObstacleTop1`].body.x || entities.Cat.body.y === entities[`ObstacleTop1`].body.y) {
-                resetObstacle(entities[`ObstacleTop1`], 2)
+            const { bodyA, bodyB } = pair;
+
+            const isCatColliding = bodyA === entities.Cat.body || bodyB === entities.Cat.body;
+
+            if (isCatColliding) {
+                const obstacleBody = bodyA === entities.Cat.body ? bodyB : bodyA;
+
+                for (let index = 1; index <= 2; index++) {
+                    if (obstacleBody === entities[`ObstacleTop${index}`].body) {
+                        resetObstacle(entities[`ObstacleTop${index}`], dispatch, index);
+                        break;
+                    }
+                }
             }
         });
     });
@@ -83,11 +95,10 @@ const Physics = (entities, { touches, time, dispatch }): Entities => {
     return entities;
 };
 
-const resetObstacle = (obstacleTop: Entity, index: number) => {
+
+const resetObstacle = (obstacleTop: Entity, dispatch: any, index: number) => {
     const pipeSizePos = getPipeSizePosPair(windowWidth * 0.9);
-
     Matter.Body.setPosition(obstacleTop.body, pipeSizePos.pipeTop.pos);
-
     obstacleTop.point = false;
 };
 

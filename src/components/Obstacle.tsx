@@ -1,6 +1,7 @@
 import Matter from 'matter-js';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
+import CoinSprite from './CoinSprite';
 
 interface ObstacleProps {
   body: Matter.Body;
@@ -28,7 +29,9 @@ const Obstacle: React.FC<ObstacleProps> = props => {
           height: 50
         },
       ]}
-    />
+    >
+      <CoinSprite />
+    </View>
   );
 };
 
